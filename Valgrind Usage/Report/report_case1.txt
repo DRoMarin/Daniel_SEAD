@@ -1,0 +1,4 @@
+El informe señala que existe un error en la linea 9 del codigo fuente.
+Corresponde a una escritura invalida de tamaño 4 bytes (Unsigned Long)
+Esto se debe a que la memoria asignada tiene 40 bytes disponibles, y el lazo pretende escribir 11 valores (0...10).
+El lazo se excede por una unidad, deberia reemplazarse la condicion del lazo for en la linea 8 con 'i < 10' o asignar una unidad mas en el malloc.

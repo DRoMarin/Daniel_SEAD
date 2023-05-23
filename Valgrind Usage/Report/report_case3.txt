@@ -1,0 +1,4 @@
+El informe indica que se asignaron 4000 bytes en total. 10 asignaciones pero solo 1 fue liberada.
+Se perdieron 3600 bytes de 9 bloques (los bloques asignados pero no liberados).
+Esto de debe a que dentro del lazo for de la linea 9 se estan haciendo 10 solicitudes de memoria sin liberar la memoria previa.
+Las 9 primeras solicitudes corresponden a una fuga de memoria. 
