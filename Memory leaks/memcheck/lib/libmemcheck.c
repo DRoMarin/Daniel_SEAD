@@ -22,7 +22,7 @@ void free(void *ptr)
 {
     if(real_free==NULL) {
         real_free = dlsym(RTLD_NEXT, "free");
-        if (NULL == real_malloc) {
+        if (NULL == real_free) {
         }
     }
     fprintf(stderr, "free\n");
