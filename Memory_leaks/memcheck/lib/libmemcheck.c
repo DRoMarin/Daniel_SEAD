@@ -13,7 +13,7 @@ void *malloc(size_t size)
         }
     }
     void *p = NULL;
-    fprintf(stderr, "malloc\n");
+    fprintf(stderr,"malloc\n");
     p = real_malloc(size);
     return p;
 }
@@ -25,6 +25,6 @@ void free(void *ptr)
         if (NULL == real_free) {
         }
     }
-    fprintf(stderr, "free\n");
+    fprintf(stderr,"free\n");
     real_free(ptr);
 }
