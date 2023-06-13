@@ -1,0 +1,55 @@
+Para esta aplicacion se consideran los siguinetes archivos:
+
+  *libmemcheck
+	-lib/libmemcheck.c
+
+  *memcheck
+	-src/memcheck.c
+  
+  *autotools
+	-configure.ac
+	-Makefile.am
+	-src/Makefile.am
+	-lib/Makefile.am
+
+-----------------------------------------------------------
+
+Biblioteca LIBMEMCHECK
+  La biblioteca es muy sencilla: se debe redefinir el contenido de las funciones malloc y free. Esto se puede
+lograr mediante el la función dlsym y el handler RTLD_NEXT, los cuales permiten buscar una definición en los 
+simbolos asociados (como libc.so). mediante esta función se puede injectar código en el programa original y 
+examinar la salida.
+  Se decidió imprimir los mensajes "malloc" y "free" respectivamente en el stream stderr para separar la 
+salida del programa y el código inyectado.
+  
+Aplicación MEMCHECK
+  El programa procesa las opciones y emite mensajes de error en caso de no incluir al menos una opcion o si
+faltase un argumento. Para ubicar la biblioteca se utiliza el valor de argv[0] el cual indica la ubicación 
+del programa (path/to/bin/memcheck) y se realiza una sustitución de strings para señalar a la biblioteca
+ (path/to/lib/libmemcheck.so). 
+  Se construye luego un comando con el siguiente formato:
+	LD_PRELOAD=/path/to/lib/libmemcheck.so $PATH/PROGRAM 2>&1 1>/dev/null
+  
+ LD_PRELOAD=/path/to/lib/lilbmemcheck.so -> precargar la biblioteca
+ $PATH/PROGRAM                           -> argumento obtenido de la opción -p
+ 2>&1 1>/dev/null			 -> redirección de stderr a stdout y la original stdout a null
+
+  El comando se ejecuta con popen(): Un wrapper de C para fork(), exec() y pipe(). Toma la salida de un 
+comando de terminal y lo caputa en un handler de archivo. Los valores capturados se comparan a "malloc" o 
+"free" y se contabiliza respectivamente.
+
+  Al finalizar el programa se obtiene el total de leaks.
+
+AUTOTOOLS:
+  En esta aplicación pequeña el montaje de autotools es pequeño: Un Makefile.am de nivel superior para incluir
+los directorios a construir (lib y src), un Makefile.am por directorio con las instrucciones respectivas de 
+compilación (bin_PROGRAMS para src y lib_LTLIBRARIES) y el configure.ac para preparar ./configure. Este último
+indica que se debe usar automake y libtool, la versión y nombre del paquete y headers a incluir.
+
+  Se deben ejecutar muchos comandos en el order correcto como aclocal, autoscan, autoconf, automake, etc.
+O en vez ejecutar autoreconf -i para instalar todo incluso los paquetes faltantes. 
+Una vez está el ./configure listo, se puede ejecutar junto a la opción --prefix=/path/to/install/dir 
+para elegir un directorio donde instalar.
+
+  Cuando el Makefile está listo, se ejecuta make install y finalmente se puede usar la aplicación.
+
