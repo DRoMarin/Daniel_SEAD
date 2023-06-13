@@ -1,4 +1,0 @@
-El informe indica que hay 5 errores en 5 contextos en la línea 11 de main.
-La línea corresponde a un printf que internamente tiene saltos condicionales que dependen del valor a imprimir (último valor del array a).
-Este valor no es inicializado ni terminado en NULL, y aun cuando se escribe sobre el array, el último elemento queda sin asignar.
-Se debe completar el array, inicializar el array o no acceder al último valor del array.
