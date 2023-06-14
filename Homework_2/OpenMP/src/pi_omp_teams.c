@@ -19,10 +19,10 @@ void main() {
     step = 1.0 / (double)num_steps;
 
     start_time = omp_get_wtime();
-    #pragma omp teams
+    #pragma omp teams //teams is a construct that creates a predefined number of teams with a number of threads
+                      //both can be controlled with the clauses num_teams and thread_limit 
     {
-        printf("%d\n", omp_get_num_teams()); 
-        #pragma omp distribute  
+        #pragma omp distribute  //distribute is a construct that divides the work of the following functional block among the teams
         for (i = 1; i <= num_steps; i++) {
             x = (i - 0.5) * step;
             sum = sum + 4.0 / (1.0 + x * x);
