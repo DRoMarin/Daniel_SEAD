@@ -19,11 +19,14 @@ void main() {
     step = 1.0 / (double)num_steps;
 
     start_time = omp_get_wtime();
-
-
-    for (i = 1; i <= num_steps; i++) {
-        x = (i - 0.5) * step;
-        sum = sum + 4.0 / (1.0 + x * x);
+    #pragma omp teams
+    {
+        printf("%d\n", omp_get_num_teams()); 
+        #pragma omp distribute  
+        for (i = 1; i <= num_steps; i++) {
+            x = (i - 0.5) * step;
+            sum = sum + 4.0 / (1.0 + x * x);
+        }
     }
 
     pi = step * sum;
