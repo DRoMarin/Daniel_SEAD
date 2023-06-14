@@ -5,14 +5,15 @@
 
 include make.def
 
-EXES= pi$(EXE) #Add others binaries files
+EXES= pi pi_omp_private $(EXE) #Add others binaries files
 
 all: $(EXES)
 
 pi$(EXE): pi.$(OBJ)
 	$(CLINKER) $(OPTFLAGS) -o pi$(EXE) pi.$(OBJ) $(LIBS)
 
-# Add the others sources files (Binaries files)
+pi_omp_private$(EXE): pi_omp_private.$(OBJ)
+	$(CLINKER) $(OPTFLAGS) -o pi_omp_private$(EXE) pi_omp_private.$(OBJ) $(LIBS)
 
 clean:
 	$(RM) $(EXES) *.$(OBJ)
