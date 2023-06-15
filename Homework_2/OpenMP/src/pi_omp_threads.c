@@ -26,14 +26,16 @@ void main()
     {
         double x, pi, sum = 0.0;
         start_time = omp_get_wtime();
-        #pragma omp parallel num_threads(thread_num)
+        #pragma omp parallel num_threads(thread_num) //parallel declares a block to parallelize 
+                                                     //while num_threads clause defines the # of threads to use for parallel
         {
-            #pragma omp single
+            #pragma omp single                      //single construct signals a functional block to only be executed by a single thread
             printf("num_threads = %d\n", omp_get_num_threads());
             #pragma omp single
             start_time = omp_get_wtime();
             
-            #pragma omp for reduction(+ : sum) private(x)
+            #pragma omp for reduction(+ : sum) private(x) // reduction applies an operation to a variable shared among loops, 
+                                                          // in this case this sums up all "sum" values to get the final sum
             for (i = 1; i <= num_steps; i++)
             {
                 x = (i - 0.5) * step;
