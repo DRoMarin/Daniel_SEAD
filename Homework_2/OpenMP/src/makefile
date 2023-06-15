@@ -5,7 +5,7 @@
 
 include make.def
 
-EXES= pi pi_omp_private pi_omp_teams$(EXE) #Add others binaries files
+EXES= pi pi_omp_private pi_omp_teams pi_omp_threads$(EXE) #Add others binaries files
 
 all: $(EXES)
 
@@ -17,6 +17,9 @@ pi_omp_private$(EXE): pi_omp_private.$(OBJ)
 
 pi_omp_teams$(EXE): pi_omp_teams.$(OBJ)
 	$(CLINKER) $(OPTFLAGS) -o pi_omp_teams$(EXE) pi_omp_teams.$(OBJ) $(LIBS)
+
+pi_omp_threads$(EXE): pi_omp_threads.$(OBJ)
+	$(CLINKER) $(OPTFLAGS) -o pi_omp_threads$(EXE) pi_omp_threads.$(OBJ) $(LIBS)
 
 clean:
 	$(RM) $(EXES) *.$(OBJ)
