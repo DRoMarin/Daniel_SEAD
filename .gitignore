@@ -38,3 +38,9 @@ Memory_leaks/memcheck/src/memcheck
 Memory_leaks/memcheck/src/memcheck.o
 Memory_leaks/memcheck/src/.deps/memcheck.Po
 .gitignore
+Homework_2/OpenMP/src/pi
+Homework_2/OpenMP/src/pi.o
+Homework_2/OpenMP/src/pi_omp_private
+Homework_2/OpenMP/src/pi_omp_private.o
+Homework_2/OpenMP/src/pi_omp_teams
+Homework_2/OpenMP/src/pi_omp_teams.o
